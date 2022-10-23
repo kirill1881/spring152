@@ -66,9 +66,10 @@
         </div>
     </div>
 </header>
-
-
-
+<h1 th:text="${item.getName()}"></h1>
+<img th:src="${item.getUrl()}">
+<h4 th:text="${item.getDisc()}"></h4>
+<h3 th:text="${item.getPrice()}"></h3>
 <footer class="text-muted">
     <div class="container">
         <p class="float-right">
