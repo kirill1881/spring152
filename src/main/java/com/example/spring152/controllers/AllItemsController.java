@@ -1,6 +1,7 @@
 package com.example.spring152.controllers;
 
 import com.example.spring152.models.ItemModel;
+import com.example.spring152.models.enums.ItemEnum;
 import com.example.spring152.repos.ItemRepo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,46 @@ public class AllItemsController {
         List<ItemModel> list = itemRepo.findAll();
         list = list.stream().filter(i -> Integer.parseInt(i.getPrice())>=min&&
                 Integer.parseInt(i.getPrice())<=max).collect(Collectors.toList());
+        model.addAttribute("items", list);
+        return "allItems";
+    }
+    @GetMapping("/cars")
+    public String getCars(Model model){
+        List<ItemModel> list = itemRepo.findAll();
+        list = list.stream().filter(i ->
+                i.getItemEnum().equals(ItemEnum.AUTOS)).collect(Collectors.toList());
+        model.addAttribute("items", list);
+        return "allItems";
+    }
+    @GetMapping("/cats")
+    public String getCats(Model model){
+        List<ItemModel> list = itemRepo.findAll();
+        list = list.stream().filter(i ->
+                i.getItemEnum().equals(ItemEnum.CATS)).collect(Collectors.toList());
+        model.addAttribute("items", list);
+        return "allItems";
+    }
+    @GetMapping("/drugs")
+    public String getDrugs(Model model){
+        List<ItemModel> list = itemRepo.findAll();
+        list = list.stream().filter(i ->
+                i.getItemEnum().equals(ItemEnum.DRUGS)).collect(Collectors.toList());
+        model.addAttribute("items", list);
+        return "allItems";
+    }
+    @GetMapping("/hometechniks")
+    public String getHome(Model model){
+        List<ItemModel> list = itemRepo.findAll();
+        list = list.stream().filter(i ->
+                i.getItemEnum().equals(ItemEnum.HOMETECHNICS)).collect(Collectors.toList());
+        model.addAttribute("items", list);
+        return "allItems";
+    }
+    @GetMapping("/other")
+    public String getOther(Model model){
+        List<ItemModel> list = itemRepo.findAll();
+        list = list.stream().filter(i ->
+                i.getItemEnum().equals(ItemEnum.OTHER)).collect(Collectors.toList());
         model.addAttribute("items", list);
         return "allItems";
     }

@@ -70,7 +70,15 @@
     <input type="number" name="max" placeholder="Максимальная цена"><br>
     <button type="submit">Применить</button>
 </form>
-<a href="/allItems">Сбросить фильтр</a>
+
+<a href="/allItems/cars">Автомобили</a>
+<a href="/allItems/cats">Котики</a>
+<a href="/allItems/drugs">Наркотики</a>
+<a href="/allItems/hometechniks">Бытовая техника</a>
+<a href="/allItems/other">Другое</a>
+
+<p><a href="/allItems">Сбросить фильтр</a></p>
+
 <div class="album py-5 bg-light">
     <div class="container">
 
@@ -82,7 +90,7 @@
                         <p class="card-text" th:text="${i.getName()}"></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="blackcat.html" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                <a th:href="'/detailItem/'+${i.getId()}" type="button" class="btn btn-sm btn-outline-secondary">View</a>
                             </div>
                             <small class="text-muted" th:text="${i.getPrice()}"></small>
                         </div>
