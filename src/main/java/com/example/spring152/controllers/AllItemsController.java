@@ -3,6 +3,7 @@ package com.example.spring152.controllers;
 import com.example.spring152.models.ItemModel;
 import com.example.spring152.models.enums.ItemEnum;
 import com.example.spring152.repos.ItemRepo;
+import com.example.spring152.services.FirebaseImageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +19,17 @@ import java.util.stream.Collectors;
 public class AllItemsController {
 
     final ItemRepo itemRepo;
+    final FirebaseImageService firebaseImageService;
 
-    public AllItemsController(ItemRepo itemRepo) {
+    public AllItemsController(ItemRepo itemRepo, FirebaseImageService firebaseImageService) {
         this.itemRepo = itemRepo;
+        this.firebaseImageService = firebaseImageService;
     }
 
     @GetMapping
     public String getPage(Model model){
         List<ItemModel> list = itemRepo.findAll();
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
         model.addAttribute("items", list);
         list.get(0).getUrl();
         return "allItems";
@@ -36,7 +40,10 @@ public class AllItemsController {
                             Model model){
         List<ItemModel> list = itemRepo.findAll();
         list = list.stream().filter(i -> Integer.parseInt(i.getPrice())>=min&&
-                Integer.parseInt(i.getPrice())<=max).collect(Collectors.toList());
+                Integer.parseInt(i.getPrice())<=max)
+                .collect(Collectors.toList());
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
+
         model.addAttribute("items", list);
         return "allItems";
     }
@@ -45,6 +52,8 @@ public class AllItemsController {
         List<ItemModel> list = itemRepo.findAll();
         list = list.stream().filter(i ->
                 i.getItemEnum().equals(ItemEnum.AUTOS)).collect(Collectors.toList());
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
+
         model.addAttribute("items", list);
         return "allItems";
     }
@@ -54,6 +63,8 @@ public class AllItemsController {
         list = list.stream().filter(i ->
                 i.getItemEnum().equals(ItemEnum.CATS)).collect(Collectors.toList());
         model.addAttribute("items", list);
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
+
         return "allItems";
     }
     @GetMapping("/drugs")
@@ -61,6 +72,8 @@ public class AllItemsController {
         List<ItemModel> list = itemRepo.findAll();
         list = list.stream().filter(i ->
                 i.getItemEnum().equals(ItemEnum.DRUGS)).collect(Collectors.toList());
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
+
         model.addAttribute("items", list);
         return "allItems";
     }
@@ -69,6 +82,8 @@ public class AllItemsController {
         List<ItemModel> list = itemRepo.findAll();
         list = list.stream().filter(i ->
                 i.getItemEnum().equals(ItemEnum.HOMETECHNICS)).collect(Collectors.toList());
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
+
         model.addAttribute("items", list);
         return "allItems";
     }
@@ -77,6 +92,8 @@ public class AllItemsController {
         List<ItemModel> list = itemRepo.findAll();
         list = list.stream().filter(i ->
                 i.getItemEnum().equals(ItemEnum.OTHER)).collect(Collectors.toList());
+        list.stream().forEach(i -> i.setUrl(firebaseImageService.getImgUrl(i.getUrl())));
+
         model.addAttribute("items", list);
         return "allItems";
     }

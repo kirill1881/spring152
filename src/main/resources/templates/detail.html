@@ -70,6 +70,12 @@
 <img th:src="${item.getUrl()}">
 <h4 th:text="${item.getDisc()}"></h4>
 <h3 th:text="${item.getPrice()}"></h3>
+
+<form method="post" th:action="'/detailItem/post/'+${item.getId()}">
+    <input name="name" placeholder="Как к вам можно обращаться"><br>
+    <input name="contact" placeholder="Оставьте ваш контакт"><br>
+    <button type="submit">Оставить заявку</button>
+</form>
 <footer class="text-muted">
     <div class="container">
         <p class="float-right">

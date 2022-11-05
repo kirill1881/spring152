@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -65,37 +66,27 @@
         </div>
     </div>
 </header>
+<div class="album py-5 bg-light">
+    <div class="container">
 
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Название товара</label>
-        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Введите название">
+        <div class="row" >
+            <div class="col-md-4" th:each="i : ${list}">
+                <div class="card mb-4 shadow-sm">
+                    <img th:src="${i.getUrl()}"  width="100%" height="225">
+                    <div class="card-body">
+                        <p class="card-text" th:text="${i.getName()}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="'/item/delete/'+${i.getId()}" type="button" class="btn btn-sm btn-outline-secondary">Удалить</a>
+                            </div>
+                            <small class="text-muted" th:text="${i.getPrice()}"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Введите цену</label>
-        <input type="text" name="price" class="form-control" id="exampleInputPassword1" placeholder="Цена">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Введите описание</label>
-        <input type="text" name="disc" class="form-control" placeholder="Описание">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Введите ссылку на фото</label>
-        <input type="file" name="file" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Выберите категорию товара</label>
-        <select name="type">
-            <option>Автомобиль</option>
-            <option>Котик</option>
-            <option>Бытовая техника</option>
-            <option>Наркотики</option>
-            <option>Другое</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Отправить данные</button>
-</form>
-
+</div>
 <footer class="text-muted">
     <div class="container">
         <p class="float-right">

@@ -3,9 +3,10 @@ package com.example.spring152.controllers;
 import com.example.spring152.models.ItemModel;
 import com.example.spring152.models.enums.ItemEnum;
 import com.example.spring152.repos.ItemRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.spring152.services.FirebaseImageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -14,9 +15,11 @@ public class AddItemController {
 
     final ItemRepo itemRepo;
     private String name;
+    final FirebaseImageService firebaseImageService;
 
-    public AddItemController(ItemRepo itemRepo) {
+    public AddItemController(ItemRepo itemRepo, FirebaseImageService firebaseImageService) {
         this.itemRepo = itemRepo;
+        this.firebaseImageService = firebaseImageService;
     }
 
     @GetMapping
@@ -28,13 +31,15 @@ public class AddItemController {
     public RedirectView setData(@RequestParam String name,
                                 @RequestParam String price,
                                 @RequestParam String disc,
-                                @RequestParam String url,
+                                @RequestParam MultipartFile file,
                                 @RequestParam String type){
         ItemModel itemModel = new ItemModel();
         itemModel.setDisc(disc);
         itemModel.setName(name);
-        itemModel.setUrl(url);
         itemModel.setPrice(price);
+
+        String fileName = firebaseImageService.save(file);
+        itemModel.setUrl(fileName);
 
         RedirectView redirectView = new RedirectView("/");
 
